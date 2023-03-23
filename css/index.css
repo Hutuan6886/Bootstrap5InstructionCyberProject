@@ -1,0 +1,719 @@
+/* Đơn vị em là xét theo kích thước font-size của thẻ cha gần nhất, đơn vị rem là xét theo kích thước font-size mặc định */
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+html,body {
+    font-family: 'Work Sans', sans-serif;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+/* xây dựng phần heading chung */
+.heading h2 {
+    margin-top: 30px;
+    font-size: 2.3rem;
+    font-weight: 800;
+    color: #69102b;
+    text-align: center;
+}
+.heading p{
+    padding: 10px 0 20px 0;
+    font-size: 0.875rem;
+    color: black;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+/* xấy dựng đường gạch */
+.heading p::after{
+    content: '';
+    width: 70px;
+    height: 2px;
+    background-color: #69102b;
+    display: block;
+    /* căn ra giữa */
+    margin: 20px auto 0;
+}
+
+/* tạo class khoảng cách tiêu đề với khối chứa nội dung trong phần ourstar */
+.section{
+    padding: 30px 0 30px;
+}
+/* tạo thẻ p có màu chữ trắng */
+.section .heading p{
+    color: white;
+}
+/* 1.header */
+.header__top {
+    background-color: #69102b;
+    font-size: 0.875rem;
+}
+
+/* xử lý màu chữ và hover cho hearder top left */
+.header__top .header__left a {
+    /* xử lý dấu gạch dưới */
+    text-decoration: none;
+    color: white;
+}
+
+.header__top .header__left i {
+    color: black;
+    /* tạo hiệu ứng hover cho thẻ i */
+    transition: color .5s;
+}
+
+/* xử lý hover bên header top left, gắn hover cho thẻ cha a, thẻ con i thay đổi */
+.header__top .header__left a:hover i {
+    color: white;
+}
+
+/* xử lý các icon bên phải */
+.header__right {
+    padding: 10px 0;
+}
+
+.header__right a {
+    color: white;
+    background-color: black;
+    /* set viền */
+    border: 1px black;
+    border-radius: 5px;
+    /* vì thẻ a là inline nên k thể set width vs height, nhưng muốn set cao dài mà để các block nằm trên 1 hàng sử dụng inline-block */
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    /* căn giữ dọc */
+    line-height: 30px;
+    margin-left: 10px;
+    /* chỉnh hiệu ứng cho hover */
+    transition: all .5s;
+}
+
+/* chỉnh hover cho icon bên phải */
+.header__right a:hover {
+    color: black;
+    background-color: white;
+}
+
+.header__bottom {
+    background-color: white;
+}
+
+.header__bottom .navbar-brand p:first-child {
+    color: black;
+    font-size: 2.25rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+}
+
+.header__bottom .navbar-brand i {
+    /* làm logo nghiêng, sử dụng skewX làm nghiêng theo trục x */
+    transform: skewX(-10deg);
+}
+
+.header__bottom .navbar-brand p:last-child {
+    font-size: 0.75rem;
+    color: pink;
+    letter-spacing: 3px;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+}
+
+.header__bottom .navbar-toggler-icon i{
+    font-size: 1.5rem;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+/* gọi từ cấp thẻ id tới thẻ cha nav-item của thẻ li */
+#navbarNavDropdown .nav-item {
+    margin: 0 15px;
+}
+
+/* gọi từ cấp thẻ id tới thẻ cha nav-link của thẻ a */
+#navbarNavDropdown .nav-link {
+    color: black;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    /* chuyển động hiệu ứng */
+    transition: all 0.5s;
+    padding: 8px 8px 0 8px;
+}
+
+/* set hover màu chữ cho thẻ menu */
+#navbarNavDropdown .nav-item:hover .nav-link {
+    color: #9e3353;
+}
+
+/* tạo hiệu ứng đường gạch ngang khi hover, vì đường gạch nằm bên dưới nên dùng after */
+#navbarNavDropdown .nav-item::after {
+    /* thuộc tính content bắt buộc phải có */
+    content: '';
+    /* tại đường gạch từ trái qua phải nên set width, set chiều cao và màu cho đường gạch */
+    /* ban đầu không muốn nhìn thấy thì sẽ set kích thươc là 0 */
+    width: 0;
+    height: 2px;
+    background-color: #69102b;
+    /* vì after là thẻ inline nên khi set chiều cao và ngang sẽ không hiện, nên phải đổi tiscnh chất sang block */
+    display: block;
+
+    transition: all .5s;
+}
+
+/* #navbarNavDropdown .nav-item là thẻ li, nên gắn hover, còn thẻ after là thẻ cần thay đổi nên gắn hover thẻ li và thay đổi after */
+#navbarNavDropdown .nav-item:hover::after {
+    width: 100%;
+}
+
+/* 2 thẻ class trong cùng 1 thẻ thì viết sát, còn viết cách ra là quan hệ cha con, gọi như vậy sẽ đang gọi thẻ li chứa class active và gọi vô thẻ a là nav-link, còn các class li khác k chứ active thì sẽ k bị gọi vô */
+#navbarNavDropdown .nav-item.active .nav-link {
+    color: #9e3353;
+}
+
+/* gọi từ id tới các thẻ chứa các class active và gọi tới after của thẻ đó */
+#navbarNavDropdown .nav-item.active::after {
+    width: 100%;
+}
+
+/* xử lý bảng dropdown */
+#navbarNavDropdown .dropdown-menu {
+    background-color: #00000085;
+    border: 1px #00000085 solid;
+}
+
+#navbarNavDropdown .dropdown-menu .dropdown-item {
+    color: white;
+    transition: color .5s;
+}
+
+#navbarNavDropdown .dropdown-menu .dropdown-item:hover {
+    /* transparent là màu trong suốt, nghĩa là không có màu gì hết, màu mặc định, không bị hiện tượng hover đổi màu nền  */
+    background-color: transparent;
+    color: #9e3353;
+}
+
+/* 2. carousel */
+
+/* chỉnh lại thanh indicators */
+/* điều chỉnh vị trí của caption, vì kĩ thuật gốc của bstr là sử dung position */
+#carouselCyber .carousel-caption {
+    /* set vị trí đẩy thẻ con so với thẻ cha, vị trí viền thẻ con bị đẩy xuống so với viền thẻ cah 50%, và viền trái thẻ cha so với thẻ con 50%  */
+    top: 50%;
+    left: 50%;
+    /* set vị trí thẻ con di chuyển theo trục xy, giá trị 50% nghĩa là thẻ con di chuyển lên 1 khoảng 50% so với giá trị của thẻ con, và di chuyển qua trái 50% so với giá trị của thẻ con */
+    /* kết hợp 2 điều này sẽ giúp căn thẻ con ra giữa */
+    /* kĩ thuật chỉ áp dụng khi có position */
+    transform: translate(-50%, -50%);
+}
+
+#carouselCyber .carousel-indicators button {
+    height: 2px;
+    width: 30px;
+    background-color: #ffffff98;
+    border: transparent;
+    border-radius: 2px;
+    margin: 0 5px 10px;
+}
+
+#carouselCyber h1 {
+    font-size: 3.25rem;
+    font-weight: 500;
+}
+
+#carouselCyber p {
+    letter-spacing: 4px;
+    /* khoảng cách dòng chữ */
+    line-height: 1.8em;
+    /* sử dụng kĩ thuật căn trái phải dòng chữ, set width 70% và sử dụng margin auto thì sẽ đẩy đều 2 bên trái phải của p */
+    width: 70%;
+    margin: 20px auto;
+    font-weight: 300;
+}
+
+#carouselCyber .btn {
+    font-size: 0.8rem;
+    padding: 10px 20px;
+    border: 1px white solid;
+    background-color: transparent;
+    color: white;
+    text-align: center;
+    transition: color .5s;
+}
+
+#carouselCyber .btn:hover {
+    background-color: #9e3353;
+    color: black;
+    border: black 1px solid;
+}
+
+/* tạo thứ tự z-index để các mảng khác khi responsive sẽ không đè vô làm mất chức năng trái phải */
+#carouselCyber .carousel-control-prev, #carouselCyber .carousel-control-next{
+    z-index: 10;
+}
+
+/* 3. wellcom */
+/* vì phần tiêu đề giống nhau nên xây dựng 1 class heading, khai báo trên cùng rồi gắn vô */
+
+.wellcom__content p{
+    text-align: center;
+    color: gray;
+    letter-spacing: 1px;
+}
+
+/* KỸ THUẬT GRID BSTR, tổng level cột là 12 ô, muốn tạo số lượng 3 cột thì mỗi cột 4 ô */
+/* Grid row phải đặt trong class container hoặc container-fluid */
+/* để nội dung bên trong cột và bên trong cột có thể chèn thêm các row và các cột */
+.wellcom__content .row{
+    width: 90%;
+    margin: 50px auto;
+}
+.wellcom__item {
+    margin: 0 20px;
+}
+.wellcom__content .wellcom__item i{
+    font-size: 2rem;
+    padding: 20px 0 10px;
+}
+.wellcom__content .wellcom__item h3{
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: #9e3353;
+    padding: 10px 0;
+}
+.wellcom__content .wellcom__item h4{
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 10px 0;
+}
+.wellcom__content .wellcom__item p{
+    text-align: left;
+    font-size: 0.875rem;
+}
+
+/* 4.ourstars */
+.ourstars{
+    background-image: url(../img/banner2.jpg);
+    /* muốn nền chuyển động trong tầm nhìn thì sử dụng background-attachment: fixed; để lướt chuột lên xuống thì hình nền di chuyển trong khoảng xem được cố định */
+    background-attachment: fixed;
+    /* để hình vừa với thẻ cha mà k bị kéo giãn */
+    background-size: cover;
+    height: 400px;
+}
+.ourstars__item{
+    text-align: center;
+    color: white;
+}
+.ourstars__item i{
+    font-size: 2rem;
+}
+.ourstars__item p:first-of-type{
+    color: #9e3353;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin: 20px 0 20px;
+}
+.ourstars__item p:last-of-type{
+    font-size: 3rem;
+}
+
+/* 5.offer */
+.offer__content{
+    text-align: center;
+}
+
+/* tạo class để thêm padding cho collum */
+.offer__col{
+    padding: 15px;
+}
+.offer__item {
+    background-color: white;
+    /* thông số của box-shadow: x y blur spread bg-color; trong đó x là trái phải, y là trên dưới, blur là độ mờ, spread là khoảng cách mờ */
+    box-shadow: 0px 1px 8px 0px gray;
+    padding: 25px 40px;
+
+    transition: all 0.5s;
+}
+
+.offer__item i{
+    font-size: 2rem;
+    color: #9e3353;
+}
+
+.offer__item p:first-of-type{
+    font-weight: 500;
+    margin: 10px 0 ;
+}
+
+.offer__item p:last-of-type{
+    font-size: 0.875rem;
+    color: gray;
+}
+
+/* tạo hover cho class .offer__item */
+.offer__item:hover{
+    background-color: #f1afc3;
+}
+
+/* 6.feedback */
+.feedback{
+    background: url(../img/banner3.jpg) no-repeat center;
+    background-attachment: fixed;
+    background-size: cover;
+}
+.feedback__content{
+    background-color: rgba(0, 0, 0, 0.479);
+    box-shadow: 1px 1px 8px 0 gray;
+    padding: 15px;
+}
+.feedback__content .item{
+    color: white;
+    /* thêm margin để cách các item với nhau */
+    margin: 0 20px;
+
+}
+.feedback__top{
+    padding: 20px;
+    margin: 20px;
+    background-color: rgba(0, 0, 0, 0.534);
+    border-radius: 5px;
+    /* ------------------- */
+    /* chỉnh vị trí after */
+    position: relative;
+}
+/* tạo dấu nhọn bên dưới feedback dùng kĩ thuật after before, gắn vô thẻ cha của đoạn hội thoại */
+.feedback__top::after{
+    content: '';
+    /* khi 1 thẻ không có kích thước width và height mà có kích thước border thì kích thước thẻ sẽ phụ thuộc vô kích thước của border, ví dụ xét cho border top, left và right cùng kích thước 50px thì lúc này kích thước thẻ sẽ chia ra 5 phần bằng nhau, top sẽ có hình dạng tam giác mũi nhọn xuống dưới, left và right sẽ có hình thang, set cho left và right màu trong suốt sẽ được hình tam giác quay ngược xuống */
+    border-top: 10px solid rgba(0, 0, 0, 0.534);
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    /* set định dạng thành inline-block, vì phải để thẻ này thành định dạng inline mới ra được hình tam giác, nhưng muốn set được kích thước phải có định dạng block nên sẽ set theo inline-block */
+    display: inline-block;
+    /* ---------------------- */
+    /* di chuyển thẻ after */
+    position: absolute;
+    /* cho top là 100% hoặc bottom -10px, âm với chính bằng kích thước thẻ after */
+    /* bottom: -10px; */
+    top: 100%;
+    left: 23%;
+}
+/* ----------------------------------------- */
+.feedback__bottom{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.feedback__content .feedback__bottom img{
+    width: 15%;
+    height: 15%;
+    border-radius: 5px;
+    /* để hình với chử ở 1 hàng thì khai báo lại block, và sử dụng kĩ thuật flex để chữ và hình lên cùng 1 hàng */
+    /* sử dụng flex chỉnh cho thẻ con thì khai báo flex tại thẻ cha feedback__bottom */
+    display: inline-block;
+    margin-right: 10px;
+    
+    /* Thuộc tính flex-direction: column; là đổi hàng thành cột, nghĩa là mặc định hiển thị 1 hàng ngang, thêm thuộc tính thì thành 1 cột dọc  */
+}
+
+.feedback__bottom .feedback__name p:first-of-type{
+    color: #9e3353;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    font-weight: 700;
+    margin: 16px 0 0;
+}
+/* chỉnh hover nút tròn owl carousel */
+.owl-theme .owl-dots .owl-dot span{
+    background-color: #411f29;
+    transition: all .5s;
+}
+/* class .owl-dot.active span là ấn xong sẽ giữ nguyên màu sau khi hover, giống focus */
+.owl-theme .owl-dots .owl-dot.active span, .owl-theme .owl-dots .owl-dot:hover span{
+    background-color: #69102b;
+}
+
+/* 7.news */
+.news .row{
+    margin-bottom: 50px;
+}
+.news .news__item a{
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    color: black;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all .5s;
+}
+.news .news__item a:hover{
+    color: #9e3353;
+}
+.news .news__item p:first-of-type{
+    color: #9e3353;
+    font-size: 0.9rem;
+    font-weight: 800;
+    margin: 20px 0;
+}
+.news .news__item p:last-of-type{
+    color: gray;
+    font-size: 0.875rem;
+    line-height: 30px;
+    letter-spacing: 1px;
+}
+
+/* Modal */
+#Modal .modal-dialog{
+    /* chỉnh kích thước cho khung modal */
+    max-width: 600px;
+}
+#Modal .modal-header h5{
+    color: #9e3353;
+    font-weight: 600;
+}
+#Modal .modal-body p{
+    padding-top: 20px;
+    font-size: 0.875rem;
+    color: gray;
+    line-height: 30px;
+    letter-spacing: 1px;
+}
+
+/* 9. Footer */
+footer{
+    background-color: black;
+}
+
+.footer__top h3{
+    color: #9e3353;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 50px 0 20px;
+}
+.footer__top p{
+    font-size: 0.875rem;
+    color: gray;
+    letter-spacing: 2px;
+    line-height: 25px;
+}
+.footer__top p i{
+    color: #9e3353;
+    font-weight: 800;
+}
+.footer__top a{
+    text-decoration: none;
+    color: gray;
+    font-size: 0.875rem;
+    display: block;
+    margin-bottom: 20px;
+
+    transition: all .5s;
+}
+.footer__top a i{
+    border: 1px solid white;
+    color: white;
+    border-radius: 5px;
+    height: 25px;
+    width: 25px;
+    text-align: center;
+    /* //todo dùng line height căn giữa theo chiều dọc */
+    line-height: 25px;
+}
+.footer__top a:hover{
+    color: #9e3353;
+}
+.footer__top a:hover i{
+    border: #9e3353 solid 1px;
+}
+/* ---------- */
+.footer__bottom h3{
+    color: #9e3353;
+    font-size: 1.1rem;
+    text-align: center;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 40px 0;
+}
+.footer__bottom input{
+    margin: 27px 0;
+    display: inline-block;
+    width: 80%;
+    height: 50px;
+    border-radius: 5px;
+}
+.footer__bottom button{
+    background-color: #69102b;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-left: 20px;
+    transition: all .5s;
+}
+.footer__bottom button:hover{
+    background-color: white;
+    color: #69102b;
+}
+
+/* ----------------------Responsive--------------------- */
+/* sử dụng max-width thì phải khai báo lớn trước nhỏ sau, còn min-width thì ngược lại */
+/* Header, xử lý sắp xếp lại các thứ tự item trên 1 hàng */
+/* Carousel xử lý khung hình ảnh cho cân đối khi thu nhỏ màn hình */
+/* Wellcom, xử lý bằng cách thay đổi thứ tự các item trên 1 hàng, màn hình to để 3 item trên 1 hàng, về màn hình nhỏ thì để 1 item trên 1 hàng, bằng cách thay đổi class grid(col-4) của bootstrap */
+
+@media screen and (max-width:1199.99px){
+/* Carousel */
+    #carouselCyber h1{
+        font-size: 4vw;
+    }
+    #carouselCyber p{
+        font-size: 1.5vw;
+        line-height: 1.8em;
+        margin: 1em auto;
+    }
+    #carouselCyber .btn{
+        font-size: 1vw;
+        /* xét padding cho bt để khung bt nhỏ theo chữ */
+        padding: 1em 2em;
+    }
+    html,body{
+        /* để xử lý khoảng trắng dư ra phía bên phải sử dụng overflow-x: hidden; Nếu không có thì k cần sử dụng */
+        /* overflow-x: hidden; */
+    }
+}
+/* vùng màn hình nhỏ hơn 768px bị mất chữ trong carousel bởi class d-none của bootstrap, muốn hiện lại thì xóa class d-non trong html đi ngay kí tự [1]*/
+
+
+@media screen and (max-width: 991.98px){
+/* HEADER */
+/* Tạo logo khi khung hình dưới 992px sẽ thu nhỏ theo đơn vị vw */
+    /* Chữ instruction */
+    .header__bottom .navbar-brand p:first-child{
+        /* 3% so với khung trình duyệt */
+        font-size: 3vw;
+    }
+    /* Chữ education */
+    .header__bottom .navbar-brand p:last-child{
+        /* 1.5% so với khung hình */
+        font-size: 1.5vw;
+    }
+    /* footer */
+    .footer__bottom h3{
+        margin: 40px 0 20px 0;
+        text-align: left;
+    }
+    .footer__bottom input{
+        height: 40px;
+        width: 70%;
+        margin: 0;
+    }
+    .footer__bottom button{
+        display: inline-block;
+        font-size: 0.6rem;
+        margin-left: 10px;
+    }
+
+/* Offer */
+/* chỉnh lại các item cho cân đối phần PROGRAMS */
+    .offer .h-offer-item3{
+        height: 337px;
+    }
+}
+@media screen and (max-width:768px){
+    /* ourstar, chỉnh lại kích thước chiều cao phần ourstars */
+    .ourstars{
+        height: 600px;
+    }
+}
+
+@media screen and (max-width:575.98px) {
+/* Carousel */
+/* Khi về màn hình nhỏ sẽ k click trái phải được bì những thẻ khác đã đè lên, giải quyết bằng cách sắp xếp thứ tự z-index có thứ tự cao hơn sẽ được ưu tiên, được sửa chung trên phần css */
+
+    /* chỉnh cho thẻ a phần hearder rớt xuống hàng khi thu nhỏ về dưới vùng màn hình 576px */
+    .header__left a{
+        display: block;
+    }
+}
+
+
+
+@media screen and (max-width:415px){
+/* Carousel */
+/* do khi thu nhỏ màn hình về các thiết bị mobile sẽ làm chữ bị dịch xuống dưới hình, tìm điểm width của thiết bị nào lớn nhất cần khác phục để sửa chung cho nhiều thiết bị */
+
+    /* xét lại kích thước chiều height cho thẻ cha carousel, sau đó cho các thẻ con bên dưới bằng kích thước nhằm để cố định lại kích thước khi thu nhỏ chiều width sẽ làm chiều height bị ảnh hưởng */
+    #carouselCyber{
+        height: 200px;
+    }
+    /* sau đó tiến hành cho các thẻ con cấp dưới bằng với chiều width của thẻ cha để cố định */
+    #carouselCyber .carousel-inner, #carouselCyber .carousel-item, #carouselCyber .carousel-item img{
+        height: 100%;
+    }
+    /* khi thay đổi chiều height sẽ làm hình bị bóp lại hẹp, sử dụng object-fit để cân đối lại hình */
+    #carouselCyber img{
+        object-fit: cover;
+    }
+    .header__bottom .navbar-toggler-icon i{
+        /* thay đổi giá trị nút botton header để phù hợp với màn hình mobile */
+        font-size: 1.25rem;
+    }
+}
+
+@media screen and (max-width:349px){
+    /* căn chỉnh lại vị trí chữ cho phần ours, tạo class mb-item2 mới cho phần chữ certified staff vì chữ dài nên màn hình nhỏ làm rớt xuống hàng gây mất cân đối item */
+    .ourstars .ourstars__item .mb-item2{
+        margin-bottom: 0;
+    }
+}
+
+/* Galaxy Fold */
+@media screen and (max-width:280px){
+/* HEADER */
+/* xử lý phần bên phải hearder khi thu nhỏ màn hình về 280px */
+    .header__right{
+        /* thu hẹp thẻ cha */
+        width: 15%;
+        text-align: center;
+    }
+    .header__right a{
+        margin-bottom: 2px;
+    }
+    /* footer */
+    .footer__bottom input{
+        height: 30px;
+        width: 60%;
+        margin: 0;
+    }
+    .footer__bottom button{
+        display: inline-block;
+        font-size: 0.3rem;
+        margin-left: 8px;
+    }
+}
+
+
+/* Khi responsive, ngoài các vùng kích thước mặc định phải set, nếu có khoảng lưng chừng nào làm trang web hiển thị lỗi rớt phần tử, thì set kết hợp min-width và max-width để sửa riêng cho vùng màn hình đó  */
+
+@media screen and (min-width:768px) and (max-width:992px){
+/* HEADER */
+/* điều kiện nhỏ nhất là 768 và lớn nhất là 992 thì thực thi */
+
+    /* Chỉnh font chữ nhỏ đi và khoảng cách giữa các item menu khi thu hẹp chiều ngang */
+    #navbarNavDropdown .nav-link{
+        font-size: 12px;
+    }
+    #navbarNavDropdown .nav-item{
+        margin: 0;
+    }
+}
+
